@@ -10,6 +10,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import * as XLSX from 'xlsx'
 import { CardSkeleton, ChartSkeleton, TableSkeleton } from '@/components/Skeleton'
+import { AnimatedCounter, AnimatedNumber } from '@/components/AnimatedCounter'
+import { motion } from 'framer-motion'
 
 interface PeopleCount {
   value: number
@@ -237,32 +239,66 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.div 
+            className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
             <h2 className="text-xl font-semibold mb-2 text-gray-700">จำนวนคนปัจจุบัน</h2>
-            <p className="text-5xl font-bold text-blue-600">{latestCount}</p>
+            <p className="text-5xl font-bold text-blue-600">
+              <AnimatedCounter value={latestCount} />
+            </p>
             <p className="text-xs text-gray-500 mt-2">คน</p>
             <p className="text-xs text-gray-400 mt-1">ณ เวลา {latestTime}</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          </motion.div>
+          <motion.div 
+            className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
             <h2 className="text-xl font-semibold mb-2 text-gray-700">จำนวนคนรวมทั้งหมด</h2>
-            <p className="text-5xl font-bold text-green-600">{totalPeople}</p>
+            <p className="text-5xl font-bold text-green-600">
+              <AnimatedCounter value={totalPeople} />
+            </p>
             <p className="text-xs text-gray-500 mt-2">คน</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          </motion.div>
+          <motion.div 
+            className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
             <h2 className="text-xl font-semibold mb-2 text-gray-700">เฉลี่ยต่อชั่วโมง</h2>
-            <p className="text-5xl font-bold text-yellow-600">{avgPeople}</p>
+            <p className="text-5xl font-bold text-yellow-600">
+              <AnimatedNumber value={parseFloat(avgPeople)} />
+            </p>
             <p className="text-xs text-gray-500 mt-2">คน/ชม.</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          </motion.div>
+          <motion.div 
+            className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
             <h2 className="text-xl font-semibold mb-2 text-gray-700">จำนวนสูงสุด</h2>
-            <p className="text-5xl font-bold text-red-600">{maxPeople}</p>
+            <p className="text-5xl font-bold text-red-600">
+              <AnimatedCounter value={maxPeople} />
+            </p>
             <p className="text-xs text-gray-500 mt-2">คน</p>
             <p className="text-xs text-gray-400 mt-1">ณ เวลา {maxTime}</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
+        <motion.div 
+          className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <h2 className="text-xl font-semibold mb-4 text-gray-900">กราฟจำนวนคนตามเวลา</h2>
           <ResponsiveContainer width="100%" height={400}>
             <AreaChart 
@@ -308,9 +344,14 @@ export default function Dashboard() {
               />
             </AreaChart>
           </ResponsiveContainer>
-        </div>
+        </motion.div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <motion.div 
+          className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-900">ตารางข้อมูลล่าสุด</h2>
             <button
@@ -371,9 +412,9 @@ export default function Dashboard() {
                 ถัดไป →
               </button>
             </div>
-          )}
-        </div>
-      </div>
+            )}
+          </div>
+        </motion.div>
     </div>
   )
 }
