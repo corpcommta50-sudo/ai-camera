@@ -162,59 +162,6 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Heatmap */}
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-gray-900">📅 Weekly Heatmap - ช่วงเวลาที่มีคนมากที่สุด</h2>
-          <div className="overflow-x-auto">
-            <div className="inline-block min-w-full">
-              <div className="flex">
-                <div className="w-12"></div>
-                <div className="flex-1 grid grid-cols-24 gap-1">
-                  {Array(24).fill(0).map((_, i) => (
-                    <div key={i} className="text-xs text-center text-gray-600">
-                      {i}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              {heatmapAvg.map((day, dayIndex) => (
-                <div key={dayIndex} className="flex items-center mb-1">
-                  <div className="w-12 text-sm text-gray-600 font-medium">{days[dayIndex]}</div>
-                  <div className="flex-1 grid grid-cols-24 gap-1">
-                    {day.map((value, hourIndex) => {
-                      const intensity = maxHeatValue > 0 ? value / maxHeatValue : 0
-                      const bgColor = intensity === 0 ? 'bg-gray-100' :
-                                     intensity < 0.25 ? 'bg-blue-200' :
-                                     intensity < 0.5 ? 'bg-blue-400' :
-                                     intensity < 0.75 ? 'bg-blue-600' : 'bg-blue-800'
-                      return (
-                        <div
-                          key={hourIndex}
-                          className={`h-8 ${bgColor} rounded flex items-center justify-center text-xs text-white font-semibold cursor-pointer hover:opacity-80 transition`}
-                          title={`${days[dayIndex]} ${hourIndex}:00 - เฉลี่ย ${value} คน`}
-                        >
-                          {value > 0 ? value : ''}
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex items-center gap-4 mt-4 text-sm text-gray-600">
-            <span>น้อย</span>
-            <div className="flex gap-1">
-              <div className="w-8 h-4 bg-gray-100 rounded"></div>
-              <div className="w-8 h-4 bg-blue-200 rounded"></div>
-              <div className="w-8 h-4 bg-blue-400 rounded"></div>
-              <div className="w-8 h-4 bg-blue-600 rounded"></div>
-              <div className="w-8 h-4 bg-blue-800 rounded"></div>
-            </div>
-            <span>มาก</span>
-          </div>
-        </div>
-
         {/* Top Hours */}
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-900">⭐ Top 5 Peak Hours</h2>
@@ -252,7 +199,10 @@ export default function Analytics() {
                   <span className="font-bold text-blue-600">{totalToday} คน</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-4">
-                  <div className="bg-blue-500 h-4 rounded-full" style={{ width: '100%' }}></div>
+                  <div 
+                    className="bg-blue-500 h-4 rounded-full transition-all duration-500" 
+                    style={{ width: `${totalToday >= totalYesterday ? '100%' : totalYesterday > 0 ? `${(totalToday / totalYesterday * 100)}%` : '100%'}` }}
+                  ></div>
                 </div>
               </div>
               <div>
@@ -262,8 +212,8 @@ export default function Analytics() {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-4">
                   <div 
-                    className="bg-gray-400 h-4 rounded-full" 
-                    style={{ width: `${totalToday > 0 ? (totalYesterday / totalToday * 100) : 0}%` }}
+                    className="bg-gray-400 h-4 rounded-full transition-all duration-500" 
+                    style={{ width: `${totalYesterday >= totalToday ? '100%' : totalToday > 0 ? `${(totalYesterday / totalToday * 100)}%` : '0%'}` }}
                   ></div>
                 </div>
               </div>
