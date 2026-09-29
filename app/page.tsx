@@ -151,7 +151,7 @@ export default function Dashboard() {
               <label className="block text-sm text-gray-600 mb-2">วันที่เริ่มต้น</label>
               <DatePicker
                 selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                onChange={(date: Date | null) => setStartDate(date)}
                 selectsStart
                 startDate={startDate}
                 endDate={endDate}
@@ -163,11 +163,11 @@ export default function Dashboard() {
               <label className="block text-sm text-gray-600 mb-2">วันที่สิ้นสุด</label>
               <DatePicker
                 selected={endDate}
-                onChange={(date) => setEndDate(date)}
+                onChange={(date: Date | null) => setEndDate(date)}
                 selectsEnd
                 startDate={startDate}
                 endDate={endDate}
-                minDate={startDate}
+                minDate={startDate || undefined}
                 dateFormat="dd/MM/yyyy"
                 className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
