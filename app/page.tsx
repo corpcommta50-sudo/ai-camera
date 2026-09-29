@@ -4,10 +4,12 @@ export const dynamic = 'force-dynamic'
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import Link from 'next/link'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import * as XLSX from 'xlsx'
+import { CardSkeleton, ChartSkeleton, TableSkeleton } from '@/components/Skeleton'
 
 interface PeopleCount {
   value: number
@@ -138,8 +140,23 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-xl text-gray-700">กำลังโหลด...</div>
+      <div className="min-h-screen p-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <div className="h-10 w-96 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-8 w-32 bg-gray-200 animate-pulse rounded"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+          </div>
+          <ChartSkeleton />
+          <div className="mt-8">
+            <TableSkeleton />
+          </div>
+        </div>
       </div>
     )
   }
@@ -149,8 +166,13 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900">☕ Cafe People Counter Dashboard</h1>
-          <div className="text-sm text-gray-600">
-            อัพเดทล่าสุด: {lastUpdate}
+          <div className="flex items-center gap-4">
+            <Link href="/analytics" className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition">
+              📊 Analytics
+            </Link>
+            <div className="text-sm text-gray-600">
+              อัพเดทล่าสุด: {lastUpdate}
+            </div>
           </div>
         </div>
 
@@ -250,8 +272,8 @@ export default function Dashboard() {
               <Tooltip 
                 contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb' }}
                 labelStyle={{ color: '#1f2937' }}
-                cursor={{ stroke: '#3b82f6', strokeWidth: 1 }}
-                position={{ y: 0 }}
+                wrapperStyle={{ outline: 'none' }}
+                cursor={false}
               />
               <Area 
                 type="monotone" 
@@ -260,6 +282,7 @@ export default function Dashboard() {
                 fill="#3b82f6" 
                 fillOpacity={0.3}
                 name="จำนวนคน"
+                activeDot={{ r: 6, fill: '#3b82f6' }}
               />
             </AreaChart>
           </ResponsiveContainer>

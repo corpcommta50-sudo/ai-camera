@@ -17,6 +17,7 @@
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.3.0",
     "recharts": "^3.10.1",
+    "recharts-to-png": "^3.0.2",
     "typescript": "^7.0.2",
     "xlsx": "^0.18.5"
   },
