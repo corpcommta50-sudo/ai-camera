@@ -65,10 +65,17 @@ export default function Dashboard() {
       return
     }
 
+    // ตั้งเวลาเป็น 00:00:00 สำหรับ startDate และ 23:59:59 สำหรับ endDate
+    const start = new Date(startDate)
+    start.setHours(0, 0, 0, 0)
+    
+    const end = new Date(endDate)
+    end.setHours(23, 59, 59, 999)
+
     const filtered = data.filter(d => {
       if (!d.time) return false
       const itemDate = new Date(d.time)
-      return itemDate >= startDate && itemDate <= endDate
+      return itemDate >= start && itemDate <= end
     })
     
     setFilteredData(filtered)
@@ -76,11 +83,15 @@ export default function Dashboard() {
   }
 
   function exportToExcel() {
-    const exportData = filteredData.map((d, index) => ({
-      'ลำดับ': index + 1,
-      'เวลา': d.time ? new Date(d.time).toLocaleString('th-TH') : '-',
-      'จำนวนคน': d.value
-    }))
+    const exportData = filteredData.map((d, index) => {
+      const dateObj = d.time ? new Date(d.time) : null
+      return {
+        'ลำดับ': index + 1,
+        'วันที่': dateObj ? dateObj.toLocaleDateString('th-TH') : '-',
+        'เวลา': dateObj ? dateObj.toLocaleTimeString('th-TH') : '-',
+        'จำนวนคน': d.value
+      }
+    })
 
     const ws = XLSX.utils.json_to_sheet(exportData)
     const wb = XLSX.utils.book_new()
@@ -172,7 +183,7 @@ export default function Dashboard() {
                 className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <div className="mt-6">
+            <div className="mt-6 flex gap-2">
               <button
                 onClick={() => {
                   setStartDate(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000))
@@ -181,6 +192,15 @@ export default function Dashboard() {
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
               >
                 7 วันล่าสุด
+              </button>
+              <button
+                onClick={() => {
+                  setStartDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000))
+                  setEndDate(new Date())
+                }}
+                className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition"
+              >
+                1 เดือน
               </button>
             </div>
           </div>
@@ -230,6 +250,8 @@ export default function Dashboard() {
               <Tooltip 
                 contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb' }}
                 labelStyle={{ color: '#1f2937' }}
+                cursor={{ stroke: '#3b82f6', strokeWidth: 1 }}
+                position={{ y: 0 }}
               />
               <Area 
                 type="monotone" 
@@ -258,22 +280,27 @@ export default function Dashboard() {
               <thead>
                 <tr className="text-left border-b-2 border-gray-300">
                   <th className="pb-3 text-gray-700">ลำดับ</th>
+                  <th className="pb-3 text-gray-700">วันที่</th>
                   <th className="pb-3 text-gray-700">เวลา</th>
                   <th className="pb-3 text-gray-700">จำนวนคน</th>
                 </tr>
               </thead>
               <tbody>
-                {currentRecords.map((d, index) => (
-                  <tr key={index} className="border-b border-gray-200">
-                    <td className="py-3 text-gray-600">{indexOfFirstRecord + index + 1}</td>
-                    <td className="py-3 text-gray-600">{d.time ? new Date(d.time).toLocaleString('th-TH') : '-'}</td>
-                    <td className="py-3">
-                      <span className="px-3 py-1 rounded bg-blue-100 text-blue-700 font-semibold">
-                        {d.value} คน
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+                {currentRecords.map((d, index) => {
+                  const dateObj = d.time ? new Date(d.time) : null
+                  return (
+                    <tr key={index} className="border-b border-gray-200">
+                      <td className="py-3 text-gray-600">{indexOfFirstRecord + index + 1}</td>
+                      <td className="py-3 text-gray-600">{dateObj ? dateObj.toLocaleDateString('th-TH') : '-'}</td>
+                      <td className="py-3 text-gray-600">{dateObj ? dateObj.toLocaleTimeString('th-TH') : '-'}</td>
+                      <td className="py-3">
+                        <span className="px-3 py-1 rounded bg-blue-100 text-blue-700 font-semibold">
+                          {d.value} คน
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>
