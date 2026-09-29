@@ -268,19 +268,16 @@ export default function Dashboard() {
             <AreaChart 
               data={chartData} 
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-              syncId="anyId"
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis 
                 dataKey="time" 
                 stroke="#6b7280"
                 tick={{ fontSize: 12 }}
-                allowDataOverflow={false}
               />
               <YAxis 
                 stroke="#6b7280"
                 tick={{ fontSize: 12 }}
-                allowDataOverflow={false}
               />
               <Tooltip 
                 contentStyle={{ 
@@ -297,9 +294,6 @@ export default function Dashboard() {
                   strokeWidth: 2,
                   strokeDasharray: '5 5'
                 }}
-                animationDuration={0}
-                isAnimationActive={false}
-                position={{ y: 0 }}
               />
               <Area 
                 type="monotone" 
@@ -309,16 +303,8 @@ export default function Dashboard() {
                 fill="#3b82f6"
                 fillOpacity={0.2}
                 name="จำนวนคน"
-                dot={{ r: 4, fill: '#3b82f6', strokeWidth: 0 }}
-                activeDot={{ 
-                  r: 10, 
-                  fill: '#3b82f6', 
-                  stroke: '#fff', 
-                  strokeWidth: 4,
-                  style: { cursor: 'pointer' }
-                }}
-                animationDuration={0}
-                isAnimationActive={false}
+                dot={false}
+                activeDot={false}
               />
             </AreaChart>
           </ResponsiveContainer>
