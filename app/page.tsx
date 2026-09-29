@@ -265,15 +265,16 @@ export default function Dashboard() {
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-900">กราฟจำนวนคนตามเวลา</h2>
           <ResponsiveContainer width="100%" height={400}>
-            <AreaChart data={chartData}>
+            <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis dataKey="time" stroke="#6b7280" />
               <YAxis stroke="#6b7280" />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb' }}
-                labelStyle={{ color: '#1f2937' }}
+                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '8px' }}
+                labelStyle={{ color: '#1f2937', fontWeight: 'bold' }}
                 wrapperStyle={{ outline: 'none' }}
-                cursor={false}
+                cursor={{ stroke: '#3b82f6', strokeWidth: 2, strokeDasharray: '5 5' }}
+                isAnimationActive={false}
               />
               <Area 
                 type="monotone" 
@@ -282,7 +283,10 @@ export default function Dashboard() {
                 fill="#3b82f6" 
                 fillOpacity={0.3}
                 name="จำนวนคน"
-                activeDot={{ r: 6, fill: '#3b82f6' }}
+                strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 6, fill: '#3b82f6', stroke: '#fff', strokeWidth: 2 }}
+                isAnimationActive={false}
               />
             </AreaChart>
           </ResponsiveContainer>
