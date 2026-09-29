@@ -30,20 +30,26 @@ export default function Dashboard() {
     try {
       setError(null)
       
+      console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL)
+      console.log('Has API Key:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+      
       const { data: result, error: fetchError } = await supabase
         .from('aicamera')
         .select('*')
         .order('time', { ascending: true })
 
+      console.log('Supabase response:', { result, fetchError })
+
       if (fetchError) {
-        throw fetchError
+        throw new Error(`Supabase error: ${fetchError.message} (Code: ${fetchError.code})`)
       }
 
       setData(result || [])
       setLastUpdate(new Date().toLocaleTimeString('th-TH'))
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch data')
-      console.error('Error fetching data:', err)
+      const errorMsg = err instanceof Error ? err.message : 'Failed to fetch data'
+      setError(errorMsg)
+      console.error('Full error:', err)
     } finally {
       setLoading(false)
     }
