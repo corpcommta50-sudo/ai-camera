@@ -265,28 +265,59 @@ export default function Dashboard() {
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
           <h2 className="text-xl font-semibold mb-4 text-gray-900">กราฟจำนวนคนตามเวลา</h2>
           <ResponsiveContainer width="100%" height={400}>
-            <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <AreaChart 
+              data={chartData} 
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="time" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" />
+              <XAxis 
+                dataKey="time" 
+                stroke="#6b7280"
+                tick={{ fontSize: 12 }}
+              />
+              <YAxis 
+                stroke="#6b7280"
+                tick={{ fontSize: 12 }}
+              />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '8px' }}
-                labelStyle={{ color: '#1f2937', fontWeight: 'bold' }}
-                wrapperStyle={{ outline: 'none' }}
-                cursor={{ stroke: '#3b82f6', strokeWidth: 2, strokeDasharray: '5 5' }}
-                isAnimationActive={false}
+                contentStyle={{ 
+                  backgroundColor: '#ffffff', 
+                  border: '1px solid #e5e7eb', 
+                  borderRadius: '6px', 
+                  padding: '8px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                }}
+                labelStyle={{ color: '#1f2937', fontWeight: 'bold', marginBottom: '4px' }}
+                itemStyle={{ color: '#3b82f6' }}
+                cursor={{ 
+                  stroke: '#3b82f6', 
+                  strokeWidth: 1,
+                  strokeDasharray: '3 3'
+                }}
+                animationDuration={0}
+                allowEscapeViewBox={{ x: false, y: false }}
               />
               <Area 
                 type="monotone" 
                 dataKey="value" 
                 stroke="#3b82f6" 
-                fill="#3b82f6" 
-                fillOpacity={0.3}
-                name="จำนวนคน"
                 strokeWidth={2}
+                fill="url(#colorValue)"
+                name="จำนวนคน"
                 dot={false}
-                activeDot={{ r: 6, fill: '#3b82f6', stroke: '#fff', strokeWidth: 2 }}
-                isAnimationActive={false}
+                activeDot={{ 
+                  r: 8, 
+                  fill: '#3b82f6', 
+                  stroke: '#fff', 
+                  strokeWidth: 3
+                }}
+                animationDuration={0}
               />
             </AreaChart>
           </ResponsiveContainer>
