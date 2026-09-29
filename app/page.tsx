@@ -9,10 +9,8 @@ import {
 } from 'recharts'
 
 interface PeopleCount {
-  id: number
   value: number
   time: string
-  created_at: string
 }
 
 export default function Dashboard() {
