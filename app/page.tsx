@@ -117,7 +117,6 @@ export default function Dashboard() {
               <Tooltip 
                 contentStyle={{ backgroundColor: '#1e293b', border: 'none' }}
                 labelStyle={{ color: '#e2e8f0' }}
-                formatter={(value: number) => [`${value} คน`, 'จำนวนคน']}
               />
               <Area 
                 type="monotone" 
@@ -141,7 +140,6 @@ export default function Dashboard() {
               <Tooltip 
                 contentStyle={{ backgroundColor: '#1e293b', border: 'none' }}
                 labelStyle={{ color: '#e2e8f0' }}
-                formatter={(value: number) => [`${value} คน`, 'จำนวนคน']}
               />
               <Bar dataKey="value" fill="#10b981" name="จำนวนคน" />
             </BarChart>
