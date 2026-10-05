@@ -444,9 +444,9 @@ export default function Dashboard() {
                 ถัดไป →
               </button>
             </div>
-            )}
-          </div>
+          )}
         </motion.div>
+      </div>
     </div>
   )
 }
