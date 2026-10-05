@@ -164,19 +164,28 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
+    <div className="min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">☕ Cafe People Counter Dashboard</h1>
+        <motion.div 
+          className="flex justify-between items-center mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-4xl font-bold text-gray-900 flex items-center gap-3">
+            <span className="wave-animation">☕</span>
+            Cafe People Counter Dashboard
+          </h1>
           <div className="flex items-center gap-4">
-            <Link href="/analytics" className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition">
+            <Link href="/analytics" className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2.5 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 font-medium">
               📊 Analytics
             </Link>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 flex items-center gap-2">
+              <span className="inline-block w-2 h-2 bg-green-500 rounded-full pulse-ring"></span>
               อัพเดทล่าสุด: {lastUpdate}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Date Range Picker */}
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
@@ -246,46 +255,69 @@ export default function Dashboard() {
           transition={{ duration: 0.5 }}
         >
           <motion.div 
-            className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
+            className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl shadow-lg border border-blue-200 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ duration: 0.3 }}
+            style={{ willChange: 'transform' }}
           >
-            <h2 className="text-xl font-semibold mb-2 text-gray-700">จำนวนคนปัจจุบัน</h2>
-            <p className="text-5xl font-bold text-blue-600">
+            <div className="absolute top-0 right-0 w-20 h-20 bg-blue-300 rounded-full opacity-20 -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500"></div>
+            <h2 className="text-lg font-semibold mb-2 text-gray-700 flex items-center gap-2">
+              <span className="text-2xl bounce-subtle">👥</span>
+              จำนวนคนปัจจุบัน
+            </h2>
+            <p className="text-5xl font-bold text-blue-600 glow-effect">
               <AnimatedCounter value={latestCount} />
             </p>
             <p className="text-xs text-gray-500 mt-2">คน</p>
             <p className="text-xs text-gray-400 mt-1">ณ เวลา {latestTime}</p>
           </motion.div>
+          
           <motion.div 
-            className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
+            className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl shadow-lg border border-green-200 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            style={{ willChange: 'transform' }}
           >
-            <h2 className="text-xl font-semibold mb-2 text-gray-700">จำนวนคนรวมทั้งหมด</h2>
-            <p className="text-5xl font-bold text-green-600">
+            <div className="absolute top-0 right-0 w-20 h-20 bg-green-300 rounded-full opacity-20 -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500"></div>
+            <h2 className="text-lg font-semibold mb-2 text-gray-700 flex items-center gap-2">
+              <span className="text-2xl bounce-subtle" style={{ animationDelay: '0.2s' }}>📊</span>
+              จำนวนคนรวมทั้งหมด
+            </h2>
+            <p className="text-5xl font-bold text-green-600 glow-effect">
               <AnimatedCounter value={totalPeople} />
             </p>
             <p className="text-xs text-gray-500 mt-2">คน</p>
           </motion.div>
+          
           <motion.div 
-            className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
+            className="bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-xl shadow-lg border border-yellow-200 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            style={{ willChange: 'transform' }}
           >
-            <h2 className="text-xl font-semibold mb-2 text-gray-700">เฉลี่ยต่อชั่วโมง</h2>
-            <p className="text-5xl font-bold text-yellow-600">
+            <div className="absolute top-0 right-0 w-20 h-20 bg-yellow-300 rounded-full opacity-20 -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500"></div>
+            <h2 className="text-lg font-semibold mb-2 text-gray-700 flex items-center gap-2">
+              <span className="text-2xl bounce-subtle" style={{ animationDelay: '0.4s' }}>⚡</span>
+              เฉลี่ยต่อชั่วโมง
+            </h2>
+            <p className="text-5xl font-bold text-yellow-600 glow-effect">
               <AnimatedNumber value={parseFloat(avgPeople)} />
             </p>
             <p className="text-xs text-gray-500 mt-2">คน/ชม.</p>
           </motion.div>
+          
           <motion.div 
-            className="bg-white p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
+            className="bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-xl shadow-lg border border-red-200 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            style={{ willChange: 'transform' }}
           >
-            <h2 className="text-xl font-semibold mb-2 text-gray-700">จำนวนสูงสุด</h2>
-            <p className="text-5xl font-bold text-red-600">
+            <div className="absolute top-0 right-0 w-20 h-20 bg-red-300 rounded-full opacity-20 -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500"></div>
+            <h2 className="text-lg font-semibold mb-2 text-gray-700 flex items-center gap-2">
+              <span className="text-2xl bounce-subtle" style={{ animationDelay: '0.6s' }}>🔥</span>
+              จำนวนสูงสุด
+            </h2>
+            <p className="text-5xl font-bold text-red-600 glow-effect">
               <AnimatedCounter value={maxPeople} />
             </p>
             <p className="text-xs text-gray-500 mt-2">คน</p>
